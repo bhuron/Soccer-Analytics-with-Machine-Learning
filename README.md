@@ -1,26 +1,24 @@
-# Companion Code for Soccer Analytics with Machine Learning
+# Companion Code for [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This repository contains the official companion code for the book **Soccer Analytics with Machine Learning** by **Haipeng Gao, Ari Joury, Guanyu Hu, and Weining Shen**. It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
+This is the the official companion code repo for the book [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/). It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
 
 ## About the Book
 
-**Soccer Analytics with Machine Learning** is a practical guide to soccer analytics, designed for both data scientists who want to apply their skills to the beautiful game and soccer enthusiasts who want to learn about data analysis. The book covers everything from the fundamentals of Python and data wrangling to advanced machine learning models for predicting match outcomes and evaluating player performance.
+_Soccer Analytics with Machine Learning_ is a practical guide to soccer analytics, designed for both data scientists who want to apply their skills to the beautiful game and soccer enthusiasts who want to learn about data analysis. The book covers everything from the fundamentals of Python and data wrangling to advanced machine learning models for predicting match outcomes and evaluating player performance.
 
-**[Link to Publisher/Purchase Page]**
+### Where to Get
 
-## Quick Start
+- [Amazon](https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115)
+- [O'Reilly](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
-To get started with the code, you will need to have Python 3.8+ installed on your system. You can then clone this repository and install the necessary dependencies.
+### Authors
 
-```bash
-git clone https://github.com/[your-organization]/[your-repo-name].git
-cd [your-repo-name]
-pip install -r requirements.txt
-```
-
-For a more detailed setup guide, please see the **[Setup Documentation](docs/setup.md)**.
+- **Haipeng Gao**: [Website](https://www.hpgao.com/) | [LinkedIn](https://www.linkedin.com/in/haipenggao/)
+- **Ari Joury**: [LinkedIn](https://www.linkedin.com/in/arijoury/) | [LinkedIn](https://www.linkedin.com/in/arijoury/)
+- **Guanyu Hu**: [Webiste](https://sites.google.com/site/nealguanyu/) | [LinkedIn](https://www.linkedin.com/in/guanyu-hu-824037117/)
+- **Weining Shen**: [Webiste](https://faculty.sites.uci.edu/weinings/) | [LinkedIn](https://www.linkedin.com/in/weining-shen-22611728/)
 
 ## Repository Structure
 
@@ -46,49 +44,43 @@ soccer-analytics-book/
     └── setup.md                       # Installation guide
 ```
 
-## Data Sources
+## Quick Start
 
-This book and its companion notebooks rely primarily on open-source data that can be accessed programmatically. You do not need to download any data files to get started.
+You can work through the notebooks in one of two ways:
 
-### StatsBomb Open Data
+1. Run them locally with Jupyter.
+2. Open them in Google Colab.
 
-The vast majority of examples use data from **StatsBomb's open data initiative**. This is a rich source of event-level data for thousands of matches from various competitions.
+### Option 1: Run Locally
 
-- **Source**: [StatsBomb Open Data on GitHub](https://github.com/statsbomb/open-data)
-- **License**: Please review the [StatsBomb Open Data License](https://github.com/statsbomb/open-data/blob/master/LICENSE.pdf) before using the data.
-
-We use the `statsbombpy` Python library to easily access this data directly within the notebooks. The library handles the downloading and parsing of the data for you.
-
-```python
-# Example of loading data with statsbombpy
-from statsbombpy import sb
-
-# Get all competitions
-competitions = sb.competitions()
-
-# Get matches for a specific competition
-matches = sb.matches(competition_id=72, season_id=30)
-```
-
-### Other Datasets
-
-Some chapters may use other datasets for specific examples (e.g., `shots_data_large.csv`). In these cases, the notebook will either provide a direct download link or include the code necessary to generate the dataset from the StatsBomb data.
-
-## How to Use the Notebooks
-
-Each chapter in the book has a corresponding folder in the `notebooks/` directory. To run the notebooks, you will need to have Jupyter installed. You can start the Jupyter Notebook server by running the following command in your terminal:
+If you want to run the notebooks on your own machine, install Python 3.8+ first, then clone the repo and install the dependencies:
 
 ```bash
+git clone https://github.com/SoccerAnalyticsML/Soccer-Analytics-with-Machine-Learning.git
+cd Soccer-Analytics-with-Machine-Learning
+pip install -r requirements.txt
 jupyter notebook
 ```
 
-This will open a new tab in your web browser, where you can navigate to the `notebooks/` directory and open the notebook you want to run.
+Then open any notebook under `notebooks/` or `extras/`. A good place to start is:
 
-## Citation
+`notebooks/chapter-2/01-python-setup-and-basics.ipynb`
 
-If you use the code from this repository in your own work, please cite the book as follows:
+### Option 2: Use Google Colab
 
-**Haipeng Gao, Ari Joury, et al. Soccer Analytics with Machine Learning. O'Reilly Media, 2026.**
+If you prefer not to install anything locally, you can run the notebooks in Google Colab:
+
+1. Open [Google Colab](https://colab.research.google.com/).
+2. Choose **File > Open notebook > GitHub**.
+3. Paste this repository URL:
+
+   `https://github.com/SoccerAnalyticsML/Soccer-Analytics-with-Machine-Learning`
+
+4. Select the notebook you want to run.
+
+If a notebook depends on local files, upload those files to your Colab session or mount Google Drive before running the cells.
+
+For a more detailed local setup guide, see **[Setup Documentation](docs/setup.md)**.
 
 ## Contact and Support
 
