@@ -10,8 +10,10 @@ _Soccer Analytics with Machine Learning_ is a practical guide to soccer analytic
 
 ### Where to Get
 
-- [Amazon](https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115)
-- [O'Reilly](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
+[<img src="docs/book-cover.png" alt="Soccer Analytics with Machine Learning book cover" width="220">](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
+
+- [**Amazon**](https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115)
+- [**O'Reilly**](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
 ### Authors
 
@@ -66,6 +68,8 @@ Then open any notebook under `notebooks/` or `extras/`. A good place to start is
 
 `notebooks/chapter-2/01-python-setup-and-basics.ipynb`
 
+For a more detailed local setup guide, see **[Setup Documentation](docs/setup.md)**.
+
 ### Option 2: Use Google Colab
 
 If you prefer not to install anything locally, you can run the notebooks in Google Colab:
@@ -79,8 +83,6 @@ If you prefer not to install anything locally, you can run the notebooks in Goog
 4. Select the notebook you want to run.
 
 If a notebook depends on local files, upload those files to your Colab session or mount Google Drive before running the cells.
-
-For a more detailed local setup guide, see **[Setup Documentation](docs/setup.md)**.
 
 ## Contact and Support
 
