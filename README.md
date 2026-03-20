@@ -10,7 +10,7 @@ _Soccer Analytics with Machine Learning_ is a practical guide to soccer analytic
 
 ### Where to Get
 
-[<img src="docs/book-cover.png" alt="Soccer Analytics with Machine Learning book cover" width="220">](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
+[<img src="docs/book-cover.png" alt="Soccer Analytics with Machine Learning book cover" width="330">](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
 - [**Amazon**](https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115)
 - [**O'Reilly**](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
