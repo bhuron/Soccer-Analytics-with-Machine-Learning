@@ -1,8 +1,8 @@
-# Companion Code for <a href="https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/" target="_blank" rel="noopener noreferrer"><em>Soccer Analytics with Machine Learning</em> (O'Reilly)</a>
+# Companion Code for [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
-<a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is the the official companion code repo for the book <a href="https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/" target="_blank" rel="noopener noreferrer"><em>Soccer Analytics with Machine Learning</em> (O'Reilly)</a>. It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
+This is the the official companion code repo for the book [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/). It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
 
 ## About the Book
 
@@ -10,25 +10,17 @@ _Soccer Analytics with Machine Learning_ is a practical guide to soccer analytic
 
 ### Where to Get
 
-<table border="1" cellspacing="0" cellpadding="6">
-  <tr>
-    <td>
-      <a href="https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/" target="_blank" rel="noopener noreferrer">
-        <img src="docs/book-cover.png" alt="Soccer Analytics with Machine Learning book cover" width="330">
-      </a>
-    </td>
-  </tr>
-</table>
+[<img src="docs/book-cover.png" alt="Soccer Analytics with Machine Learning book cover" width="330">](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
-- <a href="https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115" target="_blank" rel="noopener noreferrer"><strong>Amazon</strong></a>
-- <a href="https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/" target="_blank" rel="noopener noreferrer"><strong>O'Reilly</strong></a>
+- [**Amazon**](https://www.amazon.com/Soccer-Analytics-Machine-Learning-Predictive/dp/1098181115)
+- [**O'Reilly**](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
 
 ### Authors
 
-- **Haipeng Gao**: <a href="https://www.hpgao.com/" target="_blank" rel="noopener noreferrer">Website</a> | <a href="https://www.linkedin.com/in/haipenggao/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-- **Ari Joury**: <a href="https://www.linkedin.com/in/arijoury/" target="_blank" rel="noopener noreferrer">LinkedIn</a> | <a href="https://www.linkedin.com/in/arijoury/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-- **Guanyu Hu**: <a href="https://sites.google.com/site/nealguanyu/" target="_blank" rel="noopener noreferrer">Webiste</a> | <a href="https://www.linkedin.com/in/guanyu-hu-824037117/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-- **Weining Shen**: <a href="https://faculty.sites.uci.edu/weinings/" target="_blank" rel="noopener noreferrer">Webiste</a> | <a href="https://www.linkedin.com/in/weining-shen-22611728/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+- **Haipeng Gao**: [Website](https://www.hpgao.com/) | [LinkedIn](https://www.linkedin.com/in/haipenggao/)
+- **Ari Joury**: [LinkedIn](https://www.linkedin.com/in/arijoury/) | [LinkedIn](https://www.linkedin.com/in/arijoury/)
+- **Guanyu Hu**: [Webiste](https://sites.google.com/site/nealguanyu/) | [LinkedIn](https://www.linkedin.com/in/guanyu-hu-824037117/)
+- **Weining Shen**: [Webiste](https://faculty.sites.uci.edu/weinings/) | [LinkedIn](https://www.linkedin.com/in/weining-shen-22611728/)
 
 ## Repository Structure
 
@@ -76,13 +68,13 @@ Then open any notebook under `notebooks/` or `extras/`. A good place to start is
 
 `notebooks/chapter-2/01-python-setup-and-basics.ipynb`
 
-For a more detailed local setup guide, see <strong><a href="docs/setup.md" target="_blank" rel="noopener noreferrer">Setup Documentation</a></strong>.
+For a more detailed local setup guide, see **[Setup Documentation](docs/setup.md)**.
 
 ### Option 2: Use Google Colab
 
 If you prefer not to install anything locally, you can run the notebooks in Google Colab:
 
-1. Open <a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Google Colab</a>.
+1. Open [Google Colab](https://colab.research.google.com/).
 2. Choose **File > Open notebook > GitHub**.
 3. Paste this repository URL:
 
