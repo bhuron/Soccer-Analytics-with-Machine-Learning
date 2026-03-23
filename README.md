@@ -1,8 +1,8 @@
-# Companion Code for [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/)
+# Companion Code for [_Soccer Analytics with Machine Learning_](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/) (O'Reilly)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is the the official companion code repo for the book [_Soccer Analytics with Machine Learning_ (O'Reilly)](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/). It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
+This is the the official companion code repo for the book [_Soccer Analytics with Machine Learning_](https://learning.oreilly.com/library/view/soccer-analytics-with/9781098181109/) (O'Reilly). It provides all the Jupyter Notebooks and supplementary materials needed to follow along with the examples and exercises in the book.
 
 ## About the Book
 
@@ -66,7 +66,11 @@ jupyter notebook
 
 Then open any notebook under `notebooks/` or `extras/`. A good place to start is:
 
-`notebooks/chapter-2/01-python-setup-and-basics.ipynb`
+`notebooks/chapter-2/chapter-2-python-fundamentals.ipynb`
+
+Chapter 7 is the one exception to the one-notebook-per-chapter pattern:
+its folder also includes
+`notebooks/chapter-7/chapter-7-tensorflow-companion.ipynb`.
 
 For a more detailed local setup guide, see **[Setup Documentation](docs/setup.md)**.
 
