@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
@@ -117,6 +118,29 @@ def fixed_stake_summary(matches: pd.DataFrame, picks: pd.Series, stake: float = 
     return float(total_profit), float(roi)
 
 
+def fixed_stake_bankroll_path(
+    matches: pd.DataFrame,
+    picks: pd.Series,
+    stake: float = 100.0,
+    starting_bankroll: float | None = None,
+) -> tuple[list[float], float, float]:
+    if starting_bankroll is None:
+        starting_bankroll = stake * len(matches)
+
+    bankroll = starting_bankroll
+    roi_path: list[float] = []
+
+    for pick, (_, row) in zip(picks, matches.iterrows()):
+        odds = row[f"B365{pick}"]
+        bankroll -= stake
+        if row["FTR"] == pick:
+            bankroll += stake * odds
+        roi_path.append((bankroll - starting_bankroll) / starting_bankroll if starting_bankroll else 0.0)
+
+    final_roi = (bankroll - starting_bankroll) / starting_bankroll if starting_bankroll else 0.0
+    return roi_path, float(bankroll), float(final_roi)
+
+
 def kelly_fraction(probability: float, decimal_odds: float) -> float:
     b = decimal_odds - 1
     q = 1 - probability
@@ -131,7 +155,23 @@ def kelly_summary(
     probabilities: list[float],
     starting_bankroll: float = 1000.0,
 ) -> tuple[float, float]:
+    _, bankroll, roi = kelly_bankroll_path(
+        matches,
+        picks,
+        probabilities,
+        starting_bankroll=starting_bankroll,
+    )
+    return bankroll, roi
+
+
+def kelly_bankroll_path(
+    matches: pd.DataFrame,
+    picks: pd.Series,
+    probabilities: list[float],
+    starting_bankroll: float = 1000.0,
+) -> tuple[list[float], float, float]:
     bankroll = starting_bankroll
+    roi_path: list[float] = []
 
     for pick, probability, (_, row) in zip(picks, probabilities, matches.iterrows()):
         odds = row[f"B365{pick}"]
@@ -142,8 +182,34 @@ def kelly_summary(
         if row["FTR"] == pick:
             bankroll += stake * odds
 
-    roi = (bankroll - starting_bankroll) / starting_bankroll if starting_bankroll else 0.0
-    return float(bankroll), float(roi)
+        roi_path.append((bankroll - starting_bankroll) / starting_bankroll if starting_bankroll else 0.0)
+
+    final_roi = (bankroll - starting_bankroll) / starting_bankroll if starting_bankroll else 0.0
+    return roi_path, float(bankroll), float(final_roi)
+
+
+def plot_home_rule_roi(
+    kickoffs: pd.Series,
+    fixed_roi_path: list[float],
+    kelly_roi_path: list[float],
+    output_path: Path | None = None,
+) -> None:
+    plt.figure(figsize=(11, 5))
+    plt.plot(kickoffs, fixed_roi_path, label='Fixed Stake, Always Home', linewidth=2, color='#0B5D7A')
+    plt.plot(kickoffs, kelly_roi_path, label='Kelly, Always Home', linewidth=2, color='#B63A1B')
+    plt.axhline(0, color='#555555', linestyle='--', linewidth=1)
+    plt.xlabel('Kickoff Date')
+    plt.ylabel('ROI')
+    plt.title('ROI Time Series for Fixed Stake and Kelly on the Home-Team Rule')
+    plt.grid(alpha=0.25)
+    plt.legend()
+    plt.tight_layout()
+    if output_path is not None:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        plt.savefig(output_path, dpi=200)
+        plt.close()
+    else:
+        plt.show()
 
 
 def build_results() -> dict[str, object]:
@@ -163,10 +229,20 @@ def build_results() -> dict[str, object]:
     home_rule_probability = float((train_df["FTR"] == "H").mean())
     lowest_rule_probability = float((train_df["lowest_odds_pick"] == train_df["FTR"]).mean())
 
-    home_kelly_bankroll, home_kelly_roi = kelly_summary(
+    comparison_bankroll = float(100 * len(valid_df))
+
+    home_fixed_roi_path, _, _ = fixed_stake_bankroll_path(
+        valid_df,
+        valid_df["home_pick"],
+        stake=100.0,
+        starting_bankroll=comparison_bankroll,
+    )
+
+    home_kelly_roi_path, home_kelly_bankroll, home_kelly_roi = kelly_bankroll_path(
         valid_df,
         valid_df["home_pick"],
         [home_rule_probability] * len(valid_df),
+        starting_bankroll=comparison_bankroll,
     )
     lowest_kelly_bankroll, lowest_kelly_roi = kelly_summary(
         valid_df,
@@ -179,6 +255,7 @@ def build_results() -> dict[str, object]:
         "train_df": train_df,
         "valid_df": valid_df,
         "comparison": comparison,
+        "comparison_bankroll": comparison_bankroll,
         "home_confusion": home_confusion,
         "lowest_confusion": lowest_confusion,
         "ml_confusion": ml_confusion,
@@ -188,6 +265,8 @@ def build_results() -> dict[str, object]:
         "lowest_fixed_roi": lowest_fixed_roi,
         "home_rule_probability": home_rule_probability,
         "lowest_rule_probability": lowest_rule_probability,
+        "home_fixed_roi_path": home_fixed_roi_path,
+        "home_kelly_roi_path": home_kelly_roi_path,
         "home_kelly_bankroll": home_kelly_bankroll,
         "home_kelly_roi": home_kelly_roi,
         "lowest_kelly_bankroll": lowest_kelly_bankroll,
@@ -239,6 +318,12 @@ def write_outputs(results: dict[str, object]) -> None:
 def main() -> None:
     results = build_results()
     write_outputs(results)
+    plot_home_rule_roi(
+        results["valid_df"]["Kickoff"],
+        results["home_fixed_roi_path"],
+        results["home_kelly_roi_path"],
+        RESULTS_DIR / "chapter9_home_fixed_vs_kelly_roi.png",
+    )
     print(results["comparison"])
 
 

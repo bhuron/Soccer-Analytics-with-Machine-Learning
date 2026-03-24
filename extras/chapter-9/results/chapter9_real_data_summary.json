@@ -14,35 +14,40 @@
     "B365D",
     "B365A"
   ],
-  "average_overround": 1.0551208050672016,
   "train_matches": 206,
   "validation_matches": 103,
-  "train_start": "2025-08-15 20:00:00",
-  "train_end": "2026-01-07 19:30:00",
-  "validation_start": "2026-01-07 19:30:00",
-  "validation_end": "2026-03-22 14:15:00",
-  "home_strategy": {
-    "accuracy": 0.4174757281553398,
-    "profit": -3006.0,
-    "roi": -0.09728155339805825
+  "accuracy_ranking": [
+    {
+      "strategy": "lowest_odds",
+      "accuracy": 0.42718446601941745
+    },
+    {
+      "strategy": "machine_learning",
+      "accuracy": 0.36893203883495146
+    },
+    {
+      "strategy": "always_home",
+      "accuracy": 0.34951456310679613
+    }
+  ],
+  "fixed_stake": {
+    "always_home": {
+      "profit": -2518.0,
+      "roi": -0.24446601941747573
+    },
+    "lowest_odds": {
+      "profit": -2278.0,
+      "roi": -0.22116504854368932
+    }
   },
-  "favorite_strategy": {
-    "accuracy": 0.4886731391585761,
-    "profit": -3313.0,
-    "roi": -0.1072168284789644
-  },
-  "model": {
-    "base_accuracy": 0.36893203883495146,
-    "base_log_loss": 1.3817510667382797,
-    "calibrated_accuracy": 0.4174757281553398,
-    "calibrated_log_loss": 1.1441324476117667,
-    "flat_value_bets": 99,
-    "flat_value_win_rate": 0.26262626262626265,
-    "flat_value_profit": -1683.0,
-    "flat_value_roi": -0.17,
-    "kelly_bets": 99,
-    "kelly_final_bankroll": 277.3137567423696,
-    "kelly_profit": -9722.68624325763,
-    "kelly_roi": -0.9722686243257631
+  "kelly": {
+    "always_home": {
+      "bankroll": 52.11113681242632,
+      "roi": -0.9949406663288907
+    },
+    "lowest_odds": {
+      "bankroll": 322.585895144271,
+      "roi": -0.677414104855729
+    }
   }
 }
