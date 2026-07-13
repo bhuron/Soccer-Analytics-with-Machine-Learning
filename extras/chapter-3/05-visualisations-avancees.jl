@@ -397,6 +397,7 @@ md"""
 5. **Cartes de chaleur par période** — créer trois cartes de chaleur de
    passes pour 0–30′\, 30–60′ et 60–90′ pour voir l'évolution des motifs
    de passes.
+"""
 md"""
 ## Solutions
 """
