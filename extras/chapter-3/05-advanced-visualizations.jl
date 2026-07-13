@@ -200,7 +200,7 @@ let
 	p = draw_pitch(bgcolor="#1a1a2e", linecolor="#e0e0e0",
 		title="Shot Map with xG Sizing")
 
-	scale = 1200
+	scale = 120
 	scatter!(p, misses.x, misses.y,
 		markersize=misses.xg .* scale, color=:orangered,
 		alpha=0.5, markerstrokecolor=:white, markerstrokewidth=0.5,
@@ -446,8 +446,7 @@ let
 	for team in teams
 		sub = subset(clean, "team.name" => ByRow(==(team)); skipmissing=true)
 		goals = subset(sub, "shot.outcome.name" => ByRow(==("Goal")); skipmissing=true)
-		misses = subset(sub, "shot.outcome.name" => ByRow(!=(missing)); skipmissing=true)
-		misses = subset(misses, "shot.outcome.name" => ByRow(!=("Goal")); skipmissing=true)
+			misses = subset(sub, "shot.outcome.name" => ByRow(!=("Goal")); skipmissing=true)
 
 		p_team = draw_pitch(title=team, bgcolor="#1a1a2e")
 		scatter!(p_team, misses.x, misses.y, color=:red, markersize=4, alpha=0.5, label="Miss")
