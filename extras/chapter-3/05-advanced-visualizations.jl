@@ -114,7 +114,7 @@ begin
 			if v isa AbstractDict
 				merge!(flat, flatten_dict(v; prefix=new_key))
 			else
-				flat[new_key] = v
+				if v === nothing; flat[new_key] = missing; else; flat[new_key] = v; end
 			end
 		end
 		return flat
@@ -143,7 +143,7 @@ misses are smaller, fainter dots.
 
 # ╔═╡ e5f6a7b8-0008-6c4d-1f3e-0a1b2c3d4e5f
 let
-	shots = subset(events, "type.name" => ByRow(==("Shot")))
+	shots = subset(events, "type.name" => ByRow; skipmissing=true(==("Shot")))
 	shots.is_goal = isequal.(shots[!, "shot.outcome.name"], "Goal")
 
 	# Extract x, y from the location array
@@ -186,16 +186,16 @@ higher-quality chances.
 
 # ╔═╡ e5f6a7b8-0011-6c4d-1f3e-0a1b2c3d4e5f
 let
-	shots = subset(events, "type.name" => ByRow(==("Shot")))
+	shots = subset(events, "type.name" => ByRow; skipmissing=true(==("Shot")))
 	shots.is_goal = isequal.(shots[!, "shot.outcome.name"], "Goal")
-	shots.x = (loc -> ismissing(loc) ? missing : loc[1]).(shots.location)
-	shots.y = (loc -> ismissing(loc) ? missing : loc[2]).(shots.location)
+	shots.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(shots.location)
+	shots.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(shots.location)
 	shots.xg = shots[!, "shot.statsbomb_xg"]
 	clean = dropmissing(shots, [:x, :y, :xg])
 	clean.xg .= max.(clean.xg, 0.01)  # floor so zero-xG shots are still visible
 
-	goals   = subset(clean, :is_goal => ByRow(identity))
-	misses  = subset(clean, :is_goal => ByRow(!))
+	goals   = subset(clean, :is_goal => ByRow; skipmissing=true(identity))
+	misses  = subset(clean, :is_goal => ByRow; skipmissing=true(!))
 
 	p = draw_pitch(bgcolor="#1a1a2e", linecolor="#e0e0e0",
 		title="Shot Map with xG Sizing")
@@ -235,8 +235,8 @@ let
 	passes = subset(events,
 		"type.name" => ByRow(==("Pass")),
 		"team.name"  => ByRow(==("France Women's")))
-	passes.x = (loc -> ismissing(loc) ? missing : loc[1]).(passes.location)
-	passes.y = (loc -> ismissing(loc) ? missing : loc[2]).(passes.location)
+	passes.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(passes.location)
+	passes.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(passes.location)
 	clean = dropmissing(passes, [:x, :y])
 
 	p = draw_pitch(bgcolor="#1a1a2e", linecolor="#aaaaaa",
@@ -271,8 +271,8 @@ let
 	passes = subset(events,
 		"type.name" => ByRow(==("Pass")),
 		"team.name"  => ByRow(==("France Women's")))
-	passes.x = (loc -> ismissing(loc) ? missing : loc[1]).(passes.location)
-	passes.y = (loc -> ismissing(loc) ? missing : loc[2]).(passes.location)
+	passes.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(passes.location)
+	passes.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(passes.location)
 	clean = dropmissing(passes, [:x, :y])
 
 	p = draw_pitch(bgcolor="#1a1a2e", linecolor="#aaaaaa",
@@ -300,13 +300,13 @@ We draw the pitch rotated 90° and replot the shot map.
 
 # ╔═╡ e5f6a7b8-0020-6c4d-1f3e-0a1b2c3d4e5f
 let
-	shots = subset(events, "type.name" => ByRow(==("Shot")))
+	shots = subset(events, "type.name" => ByRow; skipmissing=true(==("Shot")))
 	shots.is_goal = isequal.(shots[!, "shot.outcome.name"], "Goal")
-	shots.x = (loc -> ismissing(loc) ? missing : loc[1]).(shots.location)
-	shots.y = (loc -> ismissing(loc) ? missing : loc[2]).(shots.location)
+	shots.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(shots.location)
+	shots.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(shots.location)
 	clean = dropmissing(shots, [:x, :y])
-	goals  = subset(clean, :is_goal => ByRow(identity))
-	misses = subset(clean, :is_goal => ByRow(!))
+	goals  = subset(clean, :is_goal => ByRow; skipmissing=true(identity))
+	misses = subset(clean, :is_goal => ByRow; skipmissing=true(!))
 
 	# Swap coordinates for vertical orientation: y → x, x → 80-y
 	p = draw_pitch(title="Vertical Shot Map")
@@ -410,16 +410,16 @@ Plot tackles, interceptions, and clearances with distinct colours.
 # ╔═╡ e5f6a7b8-0026-6c4d-1f3e-0a1b2c3d4e5f
 let
 	def_types = ["Duel", "Interception", "Clearance"]
-	def_events = subset(events, "type.name" => ByRow(t -> t in def_types))
-	def_events.x = (loc -> ismissing(loc) ? missing : loc[1]).(def_events.location)
-	def_events.y = (loc -> ismissing(loc) ? missing : loc[2]).(def_events.location)
+	def_events = subset(events, "type.name" => ByRow; skipmissing=true(t -> t in def_types))
+	def_events.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(def_events.location)
+	def_events.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(def_events.location)
 	clean = dropmissing(def_events, [:x, :y])
 
 	p = draw_pitch(title="Defensive Actions — Duel / Interception / Clearance")
 
 	colors = Dict("Duel" => :red, "Interception" => :gold, "Clearance" => :cyan)
 	for (typ, col) in colors
-		sub = subset(clean, "type.name" => ByRow(==(typ)))
+		sub = subset(clean, "type.name" => ByRow; skipmissing=true(==(typ)))
 		scatter!(p, sub.x, sub.y, color=col, markersize=6, alpha=0.7, label=typ)
 	end
 	p
@@ -434,9 +434,9 @@ Compare shot locations for both teams in the match.
 
 # ╔═╡ e5f6a7b8-0028-6c4d-1f3e-0a1b2c3d4e5f
 let
-	shots = subset(events, "type.name" => ByRow(==("Shot")))
-	shots.x = (loc -> ismissing(loc) ? missing : loc[1]).(shots.location)
-	shots.y = (loc -> ismissing(loc) ? missing : loc[2]).(shots.location)
+	shots = subset(events, "type.name" => ByRow; skipmissing=true(==("Shot")))
+	shots.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(shots.location)
+	shots.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(shots.location)
 	clean = dropmissing(shots, [:x, :y])
 
 	teams = unique(skipmissing(clean[!, "team.name"]))
@@ -444,10 +444,10 @@ let
 
 	plots_list = []
 	for team in teams
-		sub = subset(clean, "team.name" => ByRow(==(team)))
-		goals = subset(sub, "shot.outcome.name" => ByRow(==("Goal")))
-		misses = subset(sub, "shot.outcome.name" => ByRow(!=(missing)))
-		misses = subset(misses, "shot.outcome.name" => ByRow(!=("Goal")))
+		sub = subset(clean, "team.name" => ByRow; skipmissing=true; skipmissing=true(==(team)))
+		goals = subset(sub, "shot.outcome.name" => ByRow; skipmissing=true(==("Goal")))
+		misses = subset(sub, "shot.outcome.name" => ByRow; skipmissing=true(!=(missing)))
+		misses = subset(misses, "shot.outcome.name" => ByRow; skipmissing=true(!=("Goal")))
 
 		p_team = draw_pitch(title=team, bgcolor="#1a1a2e")
 		scatter!(p_team, misses.x, misses.y, color=:red, markersize=4, alpha=0.5, label="Miss")
@@ -506,9 +506,9 @@ let
 		title="Light-Theme Pitch")
 
 	# Add a few random passes just to show contrast
-	shots = subset(events, "type.name" => ByRow(==("Shot")))
-	shots.x = (loc -> ismissing(loc) ? missing : loc[1]).(shots.location)
-	shots.y = (loc -> ismissing(loc) ? missing : loc[2]).(shots.location)
+	shots = subset(events, "type.name" => ByRow; skipmissing=true(==("Shot")))
+	shots.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(shots.location)
+	shots.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(shots.location)
 	clean = dropmissing(shots, [:x, :y])
 	goals = subset(clean, "shot.outcome.name" => ByRow(==("Goal")))
 
@@ -532,8 +532,8 @@ let
 	passes = subset(events,
 		"type.name" => ByRow(==("Pass")),
 		"team.name"  => ByRow(==("France Women's")))
-	passes.x = (loc -> ismissing(loc) ? missing : loc[1]).(passes.location)
-	passes.y = (loc -> ismissing(loc) ? missing : loc[2]).(passes.location)
+	passes.x = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[1]).(passes.location)
+	passes.y = (loc -> (ismissing(loc) || loc === nothing) ? missing : loc[2]).(passes.location)
 	clean = dropmissing(passes, [:x, :y])
 
 	periods = [
@@ -544,7 +544,7 @@ let
 
 	plots_list = []
 	for (label, lo, hi) in periods
-		sub = subset(clean, :minute => ByRow(m -> lo <= m < hi))
+		sub = subset(clean, :minute => ByRow; skipmissing=true(m -> lo <= m < hi))
 		p_period = draw_pitch(bgcolor="#1a1a2e",
 			title="$label — $(nrow(sub)) passes")
 		if nrow(sub) > 0
