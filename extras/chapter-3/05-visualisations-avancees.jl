@@ -225,10 +225,10 @@ md"""
 
 # ╔═╡ e5f6a7b8-0013-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-## Pass location histogram2d heatmap
+## Carte de chaleur des emplacements de passes
 
-A histogram2d plot shows where passes originate.  Darker rectangular bins = higher pass
-density.  Let's look at France's passing.
+Un histogramme 2D montre d'où partent les passes. Les cases plus foncées =
+densité de passes plus élevée. Examinons les passes de la France.
 """
 
 # ╔═╡ e5f6a7b8-0014-6c4d-1f3e-0a1b2c3d4e5f
@@ -263,7 +263,7 @@ md"""
 ## Pass density heatmap — 2D histogram
 
 A smoothed 2D histogram gives a different perspective on pass density,
-using rectangular bins instead of rectangular bins.
+en utilisant des cases rectangulaires pour une texture différente.
 """
 
 # ╔═╡ e5f6a7b8-0017-6c4d-1f3e-0a1b2c3d4e5f
@@ -286,8 +286,8 @@ end
 
 # ╔═╡ e5f6a7b8-0018-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-Rectangular bins give a different texture than rectangular bins — useful when you
-want a smoother, more "continuous" look rather than discrete cells.
+Les cases rectangulaires donnent une texture différente — utile quand on
+recherche un aspect plus lisse et « continu » plutôt que des cellules discrètes.
 """
 
 # ╔═╡ e5f6a7b8-0019-6c4d-1f3e-0a1b2c3d4e5f
@@ -358,7 +358,7 @@ derrière un but.
 md"""
 ## Récapitulatif
 
-In this notebook we:
+Dans ce notebook, nous avons :
 
 1. Construit une fonction `draw_pitch()` réutilisable pour les coordonnées StatsBomb 120×80
 2. Créé des cartes de tirs distinguant les buts des tirs manqués
@@ -368,11 +368,11 @@ In this notebook we:
 
 ## Julia vs mplsoccer
 
-The Python `mplsoccer` library provides these visualizations out of the box.
-In Julia, we build them from scratch with Plots.jl — more code, but total
-contrôle total sur chaque ligne, couleur et marqueur. La fonction `draw_pitch()`
-above can be reused across all your soccer notebooks.
-
+La bibliothèque Python `mplsoccer` fournit ces visualisations clé en main.
+En Julia, nous les construisons à partir de zéro avec Plots.jl — plus de
+code, mais un contrôle total sur chaque ligne, couleur et marqueur.
+La fonction `draw_pitch()` ci-dessus peut être réutilisée dans tous vos
+notebooks de football.
 ## Prochaines étapes
 
 - Passing networks (next notebook)
@@ -1846,7 +1846,6 @@ version = "1.13.0+0"
 # ╟─e5f6a7b8-0021-6c4d-1f3e-0a1b2c3d4e5f
 # ╟─e5f6a7b8-0022-6c4d-1f3e-0a1b2c3d4e5f
 # ╟─e5f6a7b8-0023-6c4d-1f3e-0a1b2c3d4e5f
-# ╟─e5f6a7b8-0024-6c4d-1f3e-0a1b2c3d4e5f
 # ╟─e5f6a7b8-0025-6c4d-1f3e-0a1b2c3d4e5f
 # ╠═e5f6a7b8-0026-6c4d-1f3e-0a1b2c3d4e5f
 # ╟─e5f6a7b8-0027-6c4d-1f3e-0a1b2c3d4e5f
