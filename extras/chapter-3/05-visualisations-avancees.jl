@@ -21,13 +21,13 @@ md"""
 
 **Chapitre 3 · Analyse exploratoire de données dans le football**
 
-## What you'll learn
+## Ce que vous allez apprendre
 
-- Draw a professional soccer pitch with Plots.jl
-- Create shot maps showing goals and misses
-- Size shot markers by expected goals (xG)
-- Build pass heatmaps with histogram2d and 2D histograms
-- Customize pitch appearance and orientation
+- Dessiner un terrain de football professionnel avec Plots.jl
+- Créer des cartes de tirs montrant les buts et les tirs manqués
+- Dimensionner les marqueurs de tir selon les buts attendus (xG)
+- Construire des cartes de chaleur de passes avec histogrammes 2D
+- Personnaliser l'apparence et l'orientation du terrain
 """
 
 # ╔═╡ e5f6a7b8-0002-6c4d-1f3e-0a1b2c3d4e5f
@@ -37,12 +37,12 @@ md"""
 
 # ╔═╡ e5f6a7b8-0004-6c4d-1f3e-0a1b2c3d4e5f
 """
-    draw_pitch(; color, linecolor, title)
+    draw_pitch(; bgcolor, linecolor, title)
 
-Draw a soccer pitch in landscape orientation (120 × 80 StatsBomb coords).
-Returns a Plots plot object ready for overlaid scatter/heatmap calls.
+Dessine un terrain de football en orientation paysage (coordonnées StatsBomb 120×80).
+Retourne un objet Plots prêt pour superposer des nuages de points ou cartes de chaleur.
 
-Use `orientation=:vertical` for a vertical (portrait) pitch.
+Utiliser `orientation=:vertical` pour un terrain en mode portrait.
 """
 function draw_pitch(;
 		bgcolor   = "#22312b",
@@ -251,12 +251,11 @@ end
 
 # ╔═╡ e5f6a7b8-0015-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-**What this tells us:**
-- Darker rectangular bins = higher pass density
-- Concentration in France's half shows buildup from the back
-- Wide distribution across the pitch indicates use of full width
-- The opponent's half shows fewer passes — the attacking third is
-  contested space
+**Ce que cela nous apprend :**
+- Cases plus foncées = densité de passes plus élevée
+- La concentration dans la moitié de la France montre une construction depuis l'arrière
+- La distribution large indique l'utilisation de toute la largeur
+- La moitié adverse montre moins de passes — le tiers offensif est contesté
 """
 
 # ╔═╡ e5f6a7b8-0016-6c4d-1f3e-0a1b2c3d4e5f
@@ -357,24 +356,24 @@ derrière un but.
 
 # ╔═╡ e5f6a7b8-0022-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-## Recap
+## Récapitulatif
 
 In this notebook we:
 
-1. Built a reusable `draw_pitch()` function for 120×80 StatsBomb coordinates
-2. Created shot maps distinguishing goals from misses
-3. Sized shot markers by xG to show chance quality
-4. Built pass heatmaps with both histogram2d and 2D histogram
-5. Created vertical (portrait) pitch layouts
+1. Construit une fonction `draw_pitch()` réutilisable pour les coordonnées StatsBomb 120×80
+2. Créé des cartes de tirs distinguant les buts des tirs manqués
+3. Dimensionné les marqueurs de tirs par xG pour montrer la qualité des occasions
+4. Construit des cartes de chaleur de passes avec histogrammes 2D
+5. Créé des dispositions de terrain verticales (portrait)
 
 ## Julia vs mplsoccer
 
 The Python `mplsoccer` library provides these visualizations out of the box.
 In Julia, we build them from scratch with Plots.jl — more code, but total
-control over every line, colour, and marker.  The `draw_pitch()` function
+contrôle total sur chaque ligne, couleur et marqueur. La fonction `draw_pitch()`
 above can be reused across all your soccer notebooks.
 
-## Next steps
+## Prochaines étapes
 
 - Passing networks (next notebook)
 - Multi-panel figures comparing teams or time periods
@@ -383,21 +382,21 @@ above can be reused across all your soccer notebooks.
 
 # ╔═╡ e5f6a7b8-0023-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-## Exercises
+## Exercices
 
 1. **Defensive actions map** — plot tackles (Duel), interceptions, and
-   clearances on the pitch with different colours.
-2. **Comparison shot maps** — create side-by-side pitch plots showing shots
-   from both teams in the match.
-3. **Pass end locations** — create a heatmap of where passes *ended*, not
-   where they started.  Use the `pass.end_location` array.
-4. **Custom styling** — modify `draw_pitch()` to use your own colour scheme
-   (try white pitch with black lines, or team colours).
-5. **Time-split heatmaps** — create three pass heatmaps for 0–30′, 30–60′,
-   and 60–90′ to see how passing patterns evolve.
-"""
-
-# ╔═╡ e5f6a7b8-0024-6c4d-1f3e-0a1b2c3d4e5f
+   dégagements sur le terrain avec différentes couleurs.
+2. **Cartes de tirs comparatives** — créer des tracés côte à côte montrant
+   les tirs des deux équipes du match.
+3. **Emplacements d'arrivée des passes** — créer une carte de chaleur de
+   l'endroit où les passes *arrivent*, pas d'où elles partent. Utiliser le
+   tableau `pass.end_location`.
+4. **Style personnalisé** — modifier `draw_pitch()` pour utiliser votre
+   propre palette de couleurs (essayez un terrain blanc avec des lignes
+   noires, ou les couleurs d'une équipe).
+5. **Cartes de chaleur par période** — créer trois cartes de chaleur de
+   passes pour 0–30′\, 30–60′ et 60–90′ pour voir l'évolution des motifs
+   de passes.
 md"""
 ## Solutions
 """
