@@ -271,8 +271,8 @@ let
 	end
 
 	# Merge both into player_pos
-	metrics = leftjoin(player_pos, outgoing, on=:player_name => :player)
-	metrics = leftjoin(metrics, incoming, on=:player_name => :player)
+	metrics = leftjoin(player_pos, outgoing, on=Symbol("player.name") => :player)
+	metrics = leftjoin(metrics, incoming, on=Symbol("player.name") => :player)
 	metrics.total_connections = coalesce.(metrics.unique_targets, 0) .+ coalesce.(metrics.unique_sources, 0)
 
 	select(metrics, "player.name", :num_passes, :total_connections) |>
