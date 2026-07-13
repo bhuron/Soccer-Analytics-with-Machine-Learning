@@ -260,10 +260,10 @@ md"""
 
 # ╔═╡ e5f6a7b8-0016-6c4d-1f3e-0a1b2c3d4e5f
 md"""
-## Pass density heatmap — 2D histogram
+## Carte de chaleur de densité de passes — Histogramme 2D
 
-A smoothed 2D histogram gives a different perspective on pass density,
-en utilisant des cases rectangulaires pour une texture différente.
+Un histogramme 2D lissé donne une perspective différente sur la densité
+de passes, en utilisant des cases rectangulaires pour une texture différente.
 """
 
 # ╔═╡ e5f6a7b8-0017-6c4d-1f3e-0a1b2c3d4e5f
@@ -375,32 +375,34 @@ La fonction `draw_pitch()` ci-dessus peut être réutilisée dans tous vos
 notebooks de football.
 ## Prochaines étapes
 
-- Passing networks (next notebook)
-- Multi-panel figures comparing teams or time periods
-- Animated sequences showing match progression
+- Réseaux de passes (prochain notebook)
+- Figures multi-panneaux comparant des équipes ou des périodes
+- Séquences animées montrant la progression du match
 """
 
 # ╔═╡ e5f6a7b8-0023-6c4d-1f3e-0a1b2c3d4e5f
-md"""
-## Exercices
-
-1. **Defensive actions map** — plot tackles (Duel), interceptions, and
-   dégagements sur le terrain avec différentes couleurs.
-2. **Cartes de tirs comparatives** — créer des tracés côte à côte montrant
-   les tirs des deux équipes du match.
-3. **Emplacements d'arrivée des passes** — créer une carte de chaleur de
-   l'endroit où les passes *arrivent*, pas d'où elles partent. Utiliser le
-   tableau `pass.end_location`.
-4. **Style personnalisé** — modifier `draw_pitch()` pour utiliser votre
-   propre palette de couleurs (essayez un terrain blanc avec des lignes
-   noires, ou les couleurs d'une équipe).
-5. **Cartes de chaleur par période** — créer trois cartes de chaleur de
-   passes pour 0–30′\, 30–60′ et 60–90′ pour voir l'évolution des motifs
-   de passes.
-"""
-md"""
-## Solutions
-"""
+begin
+    md"""
+    ## Exercices
+    
+    1. **Defensive actions map** — plot tackles (Duel), interceptions, and
+       dégagements sur le terrain avec différentes couleurs.
+    2. **Cartes de tirs comparatives** — créer des tracés côte à côte montrant
+       les tirs des deux équipes du match.
+    3. **Emplacements d'arrivée des passes** — créer une carte de chaleur de
+       l'endroit où les passes *arrivent*, pas d'où elles partent. Utiliser le
+       tableau `pass.end_location`.
+    4. **Style personnalisé** — modifier `draw_pitch()` pour utiliser votre
+       propre palette de couleurs (essayez un terrain blanc avec des lignes
+       noires, ou les couleurs d'une équipe).
+    5. **Cartes de chaleur par période** — créer trois cartes de chaleur de
+       passes pour 0–30′\, 30–60′ et 60–90′ pour voir l'évolution des motifs
+       de passes.
+    """
+    md"""
+    ## Solutions
+    """
+end
 
 # ╔═╡ e5f6a7b8-0025-6c4d-1f3e-0a1b2c3d4e5f
 md"""
