@@ -216,7 +216,7 @@ let
 	end
 
 	# Draw nodes (player positions)
-	node_sizes = player_pos.num_passes .* 2.5
+	node_sizes = player_pos.num_passes .* 0.3
 	scatter!(p, player_pos.avg_x, player_pos.avg_y,
 		markersize=node_sizes, color=:lime, markerstrokecolor=:white,
 		markerstrokewidth=1.5, legend=false, z_order=3)
@@ -225,7 +225,7 @@ let
 	for row in eachrow(first(player_pos, 11))
 		name_parts = split(row."player.name")
 		label = length(name_parts) > 1 ? name_parts[end] : row."player.name"
-		annotate!(p, row.avg_x, row.avg_y - 3,
+		annotate!(p, row.avg_x, row.avg_y - 8,
 			Plots.text(label, 8, :white, :center))
 	end
 
@@ -371,7 +371,7 @@ function build_network(events, team_name; min_passes=3)
 		end
 	end
 	scatter!(plt, positions.avg_x, positions.avg_y,
-		markersize=positions.num_passes .* 2.5, color=:lime,
+		markersize=positions.num_passes .* 0.3, color=:lime,
 		markerstrokecolor=:white, markerstrokewidth=1.5, legend=false)
 	title!(plt, team_name)
 	plt
@@ -465,7 +465,7 @@ let
 		end
 	end
 	scatter!(plt, pos.avg_x, pos.avg_y,
-		markersize=pos.num_passes .* 3, color=:lime,
+		markersize=pos.num_passes .* 0.8, color=:lime,
 		markerstrokecolor=:white, markerstrokewidth=1.5)
 	title!(plt, "$team_name — Progressive Passes Only")
 	for r in eachrow(first(pos, 11))
@@ -1790,9 +1790,9 @@ version = "1.13.0+0"
 # ╟─f6a7b8c9-0001-7d5e-2a4f-1b2c3d4e5f6a
 # ╟─f6a7b8c9-0002-7d5e-2a4f-1b2c3d4e5f6a
 # ╠═f6a7b8c9-0003-7d5e-2a4f-1b2c3d4e5f6a
-# ╠═f6a7b8c9-0004-7d5e-2a4f-1b2c3d4e5f6a
+# ╟─f6a7b8c9-0004-7d5e-2a4f-1b2c3d4e5f6a
 # ╟─f6a7b8c9-0005-7d5e-2a4f-1b2c3d4e5f6a
-# ╠═f6a7b8c9-0006-7d5e-2a4f-1b2c3d4e5f6a
+# ╟─f6a7b8c9-0006-7d5e-2a4f-1b2c3d4e5f6a
 # ╟─f6a7b8c9-0007-7d5e-2a4f-1b2c3d4e5f6a
 # ╠═f6a7b8c9-0008-7d5e-2a4f-1b2c3d4e5f6a
 # ╠═f6a7b8c9-0009-7d5e-2a4f-1b2c3d4e5f6a

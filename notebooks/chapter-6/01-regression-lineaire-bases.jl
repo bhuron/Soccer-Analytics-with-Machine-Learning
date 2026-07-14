@@ -70,6 +70,8 @@ begin
 	)
 
 	players
+end
+
 # ╔═╡ b8c9d0e1-0007-9f7a-5c6d-1e2f3a4b5c6d
 md"""
 ## Visualiser la relation

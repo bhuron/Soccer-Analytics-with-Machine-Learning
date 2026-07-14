@@ -201,7 +201,7 @@ let
 
 	# Scatter plot with labels
 	scatter(shooting_comp.shots, shooting_comp.goals,
-		legend=false, markersize=12, color=:darkblue,
+		legend=false, markersize=8, color=:darkblue,
 		title="Shot Volume vs Goals — Top Teams",
 		xlabel="Total Shots", ylabel="Total Goals")
 
@@ -1636,8 +1636,8 @@ version = "1.13.0+0"
 # ╟─a7b8c9d0-0001-8e6f-3b4c-0d1e2f3a4b5c
 # ╟─a7b8c9d0-0002-8e6f-3b4c-0d1e2f3a4b5c
 # ╠═a7b8c9d0-0003-8e6f-3b4c-0d1e2f3a4b5c
-# ╠═a7b8c9d0-0004-8e6f-3b4c-0d1e2f3a4b5c
-# ╠═a7b8c9d0-0005-8e6f-3b4c-0d1e2f3a4b5c
+# ╟─a7b8c9d0-0004-8e6f-3b4c-0d1e2f3a4b5c
+# ╟─a7b8c9d0-0005-8e6f-3b4c-0d1e2f3a4b5c
 # ╟─a7b8c9d0-0006-8e6f-3b4c-0d1e2f3a4b5c
 # ╠═a7b8c9d0-0007-8e6f-3b4c-0d1e2f3a4b5c
 # ╟─a7b8c9d0-0008-8e6f-3b4c-0a1b2c3d4e5f
