@@ -362,12 +362,12 @@ let
 		1 - sum((y_test .- knn_pred).^2) / sum((y_test .- mean(y_test)).^2),
 		1 - sum((y_test .- knn_pred).^2) / sum((y_test .- mean(y_test)).^2),
 		sqrt(mean((y_test .- knn_pred).^2))])
-
-	# 3. Decision tree
-	push!(results, ["Arbre de décision",
-		1 - sum((y_test .- tree_pred).^2) / sum((y_test .- mean(y_test)).^2),
-		1 - sum((y_test .- tree_pred).^2) / sum((y_test .- mean(y_test)).^2),
-		sqrt(mean((y_test .- tree_pred).^2))])
+	# 3. Mean baseline (predict the average)
+	mean_pred = fill(mean(y_train), length(y_test))
+	push!(results, ["Prédiction moyenne",
+		1 - sum((y_test .- mean_pred).^2) / sum((y_test .- mean(y_test)).^2),
+		1 - sum((y_test .- mean_pred).^2) / sum((y_test .- mean(y_test)).^2),
+		sqrt(mean((y_test .- mean_pred).^2))])
 
 	# Bar charts
 	p1 = bar(results.model, results.test_r2,
@@ -479,12 +479,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "23a4f2e42529c12a43bbecaa9e1e1525221c8553"
-
-[[deps.AbstractTrees]]
-git-tree-sha1 = "2d9c9a55f9c93e8887ad391fbae72f8ef55e1177"
-uuid = "1520ce14-60c1-5f80-bbc7-55ef81b5835c"
-version = "0.4.5"
+project_hash = "16ce1952122c60f73056371a467e5b6d8b3e7f64"
 
 [[deps.Accessors]]
 deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "MacroTools"]
@@ -675,11 +670,6 @@ deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "473e9afc9cf30814eb67ffa5f2db7df82c3ad9fd"
 uuid = "ee1fde0b-3d02-5ea6-8484-8dfef6360eab"
 version = "1.16.2+0"
-
-deps = ["AbstractTrees", "DelimitedFiles", "LinearAlgebra", "Random", "ScikitLearnBase", "Statistics"]
-git-tree-sha1 = "526ca14aaaf2d5a0e242f3a8a7966eb9065d7d78"
-uuid = "7806a523-6efd-50cb-b5f6-3fa6f1930dbb"
-version = "0.12.4"
 
 [[deps.DelimitedFiles]]
 deps = ["Mmap"]
@@ -1427,12 +1417,6 @@ version = "3.0.4"
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 version = "0.7.0"
-
-[[deps.ScikitLearnBase]]
-deps = ["LinearAlgebra", "Random", "Statistics"]
-git-tree-sha1 = "7877e55c1523a4b336b433da39c8e8c08d2f221f"
-uuid = "6e75b9c4-186b-50bd-896f-2d2496a4843e"
-version = "0.5.0"
 
 [[deps.Scratch]]
 deps = ["Dates"]
