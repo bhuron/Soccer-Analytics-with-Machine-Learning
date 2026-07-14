@@ -325,8 +325,8 @@ let
 	- Âge : **$(Int(X_train[target_i, 3]))**
 	- Valeur : **$(round(y_train[target_i]; digits=1)) M€**
 
-	**5 joueurs les plus similaires :**
-	$(join(["$(i). Distance : $(round(dists[idx]; digits=2)) — Buts : $(Int(X_train[idx, 1])), PD : $(Int(X_train[idx, 2])), Âge : $(Int(X_train[idx, 3])), Valeur : $(round(y_train[idx]; digits=1)) M€" for (i, idx) in enumerate(neighbor_idx)], "  \n"))
+	similar_text = join(["$(i). Distance : $(round(dists[idx]; digits=2)) — Buts : $(Int(X_train[idx, 1])), PD : $(Int(X_train[idx, 2])), Âge : $(Int(X_train[idx, 3])), Valeur : $(round(y_train[idx]; digits=1)) M€" for (i, idx) in enumerate(neighbor_idx)], "  \\n")
+	$(similar_text)
 	"""
 end
 
