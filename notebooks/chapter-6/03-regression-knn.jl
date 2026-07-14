@@ -316,7 +316,13 @@ let
 	target_vec = X_train_scaled[target_i:target_i, :]
 
 	dists = vec([sqrt(sum((target_vec .- X_train_scaled[j, :]).^2)) for j in 1:size(X_train_scaled,1)])
-	neighbor_idx = sortperm(dists)[2:6]  # skip self (distance 0)
+	neighbor_idx = sortperm(dists)[2:6]
+
+	lines_list = String[]
+	for (i, idx) in enumerate(neighbor_idx)
+		push!(lines_list, "$i. Distance : $(round(dists[idx]; digits=2)) | Buts : $(Int(X_train[idx, 1])) | PD : $(Int(X_train[idx, 2])) | Âge : $(Int(X_train[idx, 3])) | Valeur : $(round(y_train[idx]; digits=1)) M€")
+	end
+	similar_text = join(lines_list, "\n")
 
 	md"""
 	**Joueur cible :**
@@ -325,8 +331,7 @@ let
 	- Âge : **$(Int(X_train[target_i, 3]))**
 	- Valeur : **$(round(y_train[target_i]; digits=1)) M€**
 
-	similar_text = join(["$(i). Distance : $(round(dists[idx]; digits=2)) — Buts : $(Int(X_train[idx, 1])), PD : $(Int(X_train[idx, 2])), Âge : $(Int(X_train[idx, 3])), Valeur : $(round(y_train[idx]; digits=1)) M€" for (i, idx) in enumerate(neighbor_idx)], "  
-")
+	**5 joueurs les plus similaires :**
 	$(similar_text)
 	"""
 end
