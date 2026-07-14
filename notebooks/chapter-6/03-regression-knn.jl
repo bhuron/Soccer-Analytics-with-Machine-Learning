@@ -255,7 +255,7 @@ let
 		colorbar=true, title="Surface de décision KNN (K=$best_k)",
 		xlabel="Buts", ylabel="Passes décisives")
 	scatter!(players_df.goals, players_df.assists,
-		color=players_df.market_value, markersize=8,
+		color=:darkblue, markersize=6,
 		markerstrokecolor=:black, markerstrokewidth=0.5,
 		label="Joueurs réels")
 end
