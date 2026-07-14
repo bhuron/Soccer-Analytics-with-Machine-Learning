@@ -278,7 +278,7 @@ let
 		skipmissing=true)
 
 	per_match = @chain japan_passes begin
-		groupby(_, [:match_id, "team.name"])
+		groupby(_, ["match_id", "team.name"])
 		combine(
 			"type.name" => length => :attempted,
 			"pass.outcome.name" => (x -> count(ismissing, x)) => :completed)
