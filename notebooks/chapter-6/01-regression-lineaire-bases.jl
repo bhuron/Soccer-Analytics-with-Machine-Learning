@@ -69,14 +69,9 @@ begin
 		value_M    = [90, 60, 25, 100, 45, 70, 15],
 	)
 
-	table_rows = join(["| $(r.name) | $(r.goals) | $(r.value_M)" for r in eachrow(players)], "\n")
+	table_md = "| Joueur | Buts | Valeur (M€) |\n|---|---|---|\n" *join(["| $(r.name) | $(r.goals) | $(r.value_M) |\n" for r in eachrow(players)])
 
-	md"""
-| Joueur | Buts | Valeur (M€) |
-|---|---|---|
-$(table_rows)
-"""
-end
+	Markdown.parse(table_md)
 
 # ╔═╡ b8c9d0e1-0007-9f7a-5c6d-1e2f3a4b5c6d
 md"""
@@ -246,14 +241,9 @@ let
 	new = DataFrame(goals=[10, 20, 30])
 	preds = predict(model, new)
 
-	pred_rows = join(["| $(r.goals) | **$(round(p; digits=1))** |" for (r, p) in zip(eachrow(new), preds)], "\n")
-
-	md"""
-**Prédictions de valeur marchande :**
-| Buts | Valeur prédite (M€) |
-|---|---|
-$(pred_rows)
-"""
+	pred_md = "**Prédictions de valeur marchande :**\n| Buts | Valeur prédite (M€) |\n|---|---|\n" *
+	    join(["| $(r.goals) | **$(round(p; digits=1))** |\n" for (r, p) in zip(eachrow(new), preds)])
+	Markdown.parse(pred_md)
 end
 
 # ╔═╡ b8c9d0e1-0023-9f7a-5c6d-1e2f3a4b5c6d
