@@ -1,0 +1,14 @@
+# Soccer Analytics Live Course — Required Libraries
+# Install with: pip install -r requirements_live_course.txt
+
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+scikit-learn>=1.3.0
+statsmodels>=0.14.0
+mplsoccer>=1.2.0
+jupyter>=1.0.0
+
+# Optional: only needed if you want to run the neural network demo (Part 6)
+# torch>=2.0.0
