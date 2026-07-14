@@ -69,13 +69,13 @@ begin
 		value_M    = [90, 60, 25, 100, 45, 70, 15],
 	)
 
-	table_rows = join(["| $(r.name) | $(r.goals) | $(r.value_M) |" for r in eachrow(players)], "\n")
+	table_rows = join(["| $(r.name) | $(r.goals) | $(r.value_M)" for r in eachrow(players)], "\n")
 
 	md"""
-	| Joueur | Buts | Valeur (M€) |
-	|---|---|---|
-	$(table_rows)
-	"""
+| Joueur | Buts | Valeur (M€) |
+|---|---|---|
+$(table_rows)
+"""
 end
 
 # ╔═╡ b8c9d0e1-0007-9f7a-5c6d-1e2f3a4b5c6d
@@ -118,13 +118,13 @@ let
 	Modèle entraîné avec succès !
 
 	**Paramètres du modèle :**
-	| Paramètre | Valeur |
-	|---|---|
-	| Ordonnée à l'origine | **$(round(intercept; digits=2))** |
-	| Pente (coefficient Buts) | **$(round(slope; digits=2))** |
+| Paramètre | Valeur |
+|---|---|
+| Ordonnée à l'origine | **$(round(intercept; digits=2))** |
+| Pente (coefficient Buts) | **$(round(slope; digits=2))** |
 
-	**Équation du modèle :** Valeur = $(round(slope; digits=2)) × Buts + $(round(intercept; digits=2))
-	"""
+**Équation du modèle :** Valeur = $(round(slope; digits=2)) × Buts + $(round(intercept; digits=2))
+"""
 end
 
 # ╔═╡ b8c9d0e1-0012-9f7a-5c6d-1e2f3a4b5c6d
@@ -249,11 +249,11 @@ let
 	pred_rows = join(["| $(r.goals) | **$(round(p; digits=1))** |" for (r, p) in zip(eachrow(new), preds)], "\n")
 
 	md"""
-	**Prédictions de valeur marchande :**
-	| Buts | Valeur prédite (M€) |
-	|---|---|
-	$(pred_rows)
-	"""
+**Prédictions de valeur marchande :**
+| Buts | Valeur prédite (M€) |
+|---|---|
+$(pred_rows)
+"""
 end
 
 # ╔═╡ b8c9d0e1-0023-9f7a-5c6d-1e2f3a4b5c6d
