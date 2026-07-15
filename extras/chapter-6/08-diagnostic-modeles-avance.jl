@@ -198,17 +198,12 @@ let
 	for j in 1:length(predictors)
 		y_col = X_mat[:, j]
 		X_rest = X_mat[:, setdiff(1:end, j)]
-		df_vif = DataFrame(X_rest, [string(predictors[i]) for i in setdiff(1:length(predictors), j)])
-		df_vif.y = y_col
-		m = lm(@formula(y ~ 1 + shots_on_target), df_vif)  # fallback
-		# Build formula dynamically — use simple approach
-		r2_j = try
-			f = Term(:y) ~ sum([Term(Symbol(predictors[i])) for i in setdiff(1:length(predictors), j)])
-			model_vif = lm(f, df_vif)
-			r²(model_vif)
-		catch
-			0.0
-		end
+		# OLS manually: beta = X\y, R2 = 1 - SSE/SST
+		beta = X_rest \ y_col
+		y_pred = X_rest * beta
+		sse = sum((y_col .- y_pred).^2)
+		sst = sum((y_col .- mean(y_col)).^2)
+		r2_j = 1 - sse / sst
 		push!(vif_vals, 1 / (1 - r2_j))
 	end
 
