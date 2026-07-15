@@ -384,19 +384,19 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 DataFrames = "~1.8.2"
 Distributions = "~0.25.129"
-StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 GLM = "~1.9.5"
 Plots = "~1.41.6"
+StatsBase = "~0.34.12"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -405,7 +405,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "f812ee69bd25203a9049fcdc479beb04871e7a85"
+project_hash = "aedf49005afdd9d9309789779f2808010b280791"
 
 [[deps.Accessors]]
 deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "MacroTools"]

@@ -59,24 +59,44 @@ md"""
 ## Étape 1 — Charger et explorer les données
 """
 
+# ╔═╡ f2a3b4c5-0006-3d1e-9a0b-5c6d7e8f9a0b
+begin
+	teams = ["Arsenal", "Chelsea", "Liverpool", "Man City", "Man United", "Tottenham"]
+	n_matches = 200
+
+	match_df = DataFrame(
+		team              = rand(teams, n_matches),
+		shots_on_target   = rand(3:15, n_matches),
+		possession        = round.(rand(35.0:0.1:70.0, n_matches); digits=1),
+		pass_accuracy     = round.(rand(70.0:0.1:92.0, n_matches); digits=1),
+		xg                = round.(rand(0.5:0.01:3.5, n_matches); digits=2),
+		opponent_strength = round.(rand(0.3:0.01:0.9, n_matches); digits=2),
+		home_advantage    = rand([0, 1], n_matches),
+	)
+
+	# Realistic goals
+	match_df.goals = round.(Int, clamp.(
+		match_df.xg .* 0.7 .+
+		match_df.shots_on_target .* 0.08 .+
+		match_df.home_advantage .* 0.3 .-
+		match_df.opponent_strength .* 0.5 .+
+		randn(n_matches) .* 0.4, 0, 6))
+
+	# Feature engineering
+	match_df.xg_shots       = match_df.xg .* match_df.shots_on_target
+	match_df.home_vs_strong = match_df.home_advantage .* (1 .- match_df.opponent_strength)
+	match_df.shot_efficiency = match_df.xg ./ (match_df.shots_on_target .+ 1)
+
+	# Team strength encoding
+	team_avg = combine(groupby(match_df, :team), :goals => mean => :team_strength)
+	match_df = leftjoin(match_df, team_avg, on=:team)
+
+		first(match_df, 10)
+end
+
 # ╔═╡ f2a3b4c5-0007-3d1e-9a0b-5c6d7e8f9a0b
 md"""
 ## Étape 2 — Analyse exploratoire (EDA)
-"""
-
-# ╔═╡ f2a3b4c5-0009-3d1e-9a0b-5c6d7e8f9a0b
-md"""
-**Aperçus clés :**
-- Le xG a la plus forte corrélation avec les buts
-- L'avantage du terrain augmente les buts d'environ 0,3 en moyenne
-- La force de l'adversaire est corrélée négativement avec les buts marqués
-"""
-
-# ╔═╡ f2a3b4c5-0010-3d1e-9a0b-5c6d7e8f9a0b
-md"""
-## Étape 3 — Feature engineering
-
-Créer des variables supplémentaires pour améliorer les prédictions.
 """
 
 # ╔═╡ f2a3b4c5-0008-3d1e-9a0b-5c6d7e8f9a0b
@@ -112,6 +132,28 @@ let
 		title="Effet domicile", ylabel="Buts moyens")
 
 	plot(p1, p2, p3, p4, layout=(2, 2), size=(900, 700))
+end
+
+# ╔═╡ f2a3b4c5-0009-3d1e-9a0b-5c6d7e8f9a0b
+md"""
+**Aperçus clés :**
+- Le xG a la plus forte corrélation avec les buts
+- L'avantage du terrain augmente les buts d'environ 0,3 en moyenne
+- La force de l'adversaire est corrélée négativement avec les buts marqués
+"""
+
+# ╔═╡ f2a3b4c5-0010-3d1e-9a0b-5c6d7e8f9a0b
+md"""
+## Étape 3 — Feature engineering
+
+Créer des variables supplémentaires pour améliorer les prédictions.
+"""
+
+# ╔═╡ f2a3b4c5-0011-3d1e-9a0b-5c6d7e8f9a0b
+begin
+	# (feature engineering merged into data creation cell above)
+
+	match_df
 end
 
 # ╔═╡ f2a3b4c5-0012-3d1e-9a0b-5c6d7e8f9a0b
@@ -394,48 +436,6 @@ md"""
 6. **Deux équipes** — prédire les buts des deux équipes et déterminer le
    résultat du match.
 """
-
-# ╔═╡ f2a3b4c5-0011-3d1e-9a0b-5c6d7e8f9a0b
-begin
-	# (feature engineering merged into data creation cell above)
-
-	match_df
-end
-
-# ╔═╡ f2a3b4c5-0006-3d1e-9a0b-5c6d7e8f9a0b
-begin
-	teams = ["Arsenal", "Chelsea", "Liverpool", "Man City", "Man United", "Tottenham"]
-	n_matches = 200
-
-	match_df = DataFrame(
-		team              = rand(teams, n_matches),
-		shots_on_target   = rand(3:15, n_matches),
-		possession        = round.(rand(35.0:0.1:70.0, n_matches); digits=1),
-		pass_accuracy     = round.(rand(70.0:0.1:92.0, n_matches); digits=1),
-		xg                = round.(rand(0.5:0.01:3.5, n_matches); digits=2),
-		opponent_strength = round.(rand(0.3:0.01:0.9, n_matches); digits=2),
-		home_advantage    = rand([0, 1], n_matches),
-	)
-
-	# Realistic goals
-	match_df.goals = round.(Int, clamp.(
-		match_df.xg .* 0.7 .+
-		match_df.shots_on_target .* 0.08 .+
-		match_df.home_advantage .* 0.3 .-
-		match_df.opponent_strength .* 0.5 .+
-		randn(n_matches) .* 0.4, 0, 6))
-
-	# Feature engineering
-	match_df.xg_shots       = match_df.xg .* match_df.shots_on_target
-	match_df.home_vs_strong = match_df.home_advantage .* (1 .- match_df.opponent_strength)
-	match_df.shot_efficiency = match_df.xg ./ (match_df.shots_on_target .+ 1)
-
-	# Team strength encoding
-	team_avg = combine(groupby(match_df, :team), :goals => mean => :team_strength)
-	match_df = leftjoin(match_df, team_avg, on=:team)
-
-		first(match_df, 10)
-end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

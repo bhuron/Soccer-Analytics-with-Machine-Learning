@@ -258,6 +258,7 @@ let
 	Ces points ont un fort effet de levier sur le modèle. Il faut les examiner —
 	erreurs de données, événements aberrants, ou cas réels mais extrêmes ?
 	"""
+	p
 end
 
 # ╔═╡ e1f2a3b4-0017-2c0d-8f9a-4b5c6d7e8f9a
