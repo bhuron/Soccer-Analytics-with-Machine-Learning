@@ -185,8 +185,8 @@ let
 		for team in unique(df[!, team_col])
 			rows = findall(df[!, team_col] .== team)
 			vals = df[rows, value_col]
-			for j in (n_lag+1):length(vals)
-				result[rows[j]] = mean(vals[j-n_lag-n_window+1:j-n_lag])
+			for j in (n_lag+n_window):length(vals)
+				result[rows[j]] = mean(vals[j-n_window:j-1])
 			end
 		end
 		return result
@@ -244,10 +244,10 @@ let
 	idx = sortperm(corrs, rev=true)[1:8]
 	best = [string(candidates[i]) for i in idx]
 
-	md"""
-	**Top 8 variables par corrélation absolue avec les buts :**
-	$(join(["$(i). $(best[i])" for i in 1:8], "  \n"))
-	"""
+	sel_lines = ["$(j). $(best[j])" for j in 1:8]
+	md"""**Top 8 variables par corrélation absolue avec les buts :**
+$(join(sel_lines, "
+"))"""
 end
 
 # ╔═╡ b4c5d6e7-0019-5f3a-1c2d-7e8f9a0b1c2d
