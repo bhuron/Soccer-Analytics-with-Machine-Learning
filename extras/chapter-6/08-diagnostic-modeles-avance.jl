@@ -164,7 +164,10 @@ let
 	# Leverage vs standardized residuals
 	resids = residuals(diag_model)
 	std_res = resids ./ std(resids)
-	lev = leverage(diag_model)
+	# Leverage = diagonal of hat matrix H = X(X'X)⁻¹X'
+	X_mat = modelmatrix(diag_model)
+	H = X_mat * inv(X_mat' * X_mat) * X_mat'
+	lev = diag(H)
 
 	p2 = scatter(lev, std_res, alpha=0.5, legend=false, color=:steelblue,
 		title="Levier vs Résidus standardisés", xlabel="Levier", ylabel="Résidus std")
