@@ -11,6 +11,7 @@ begin
 	using Random
 	using Distributions
 	using GLM
+	using StatsBase
 	using Plots
 	gr()
 	Random.seed!(42)
@@ -97,8 +98,8 @@ let
 	df_od.pois_pred = predict(pois_model, df_od)
 	df_od.nb_pred   = predict(nb_model, df_od)
 
-	global pois_aic = aic(pois_model)
-	global nb_aic   = aic(nb_model)
+	global pois_aic = StatsBase.aic(pois_model)
+	global nb_aic   = StatsBase.aic(nb_model)
 
 	p1 = scatter(df_od.goals, df_od.pois_pred, alpha=0.5, legend=false, color=:steelblue,
 		title="Poisson (AIC=$(round(pois_aic; digits=1)))",
@@ -219,7 +220,7 @@ Comment savoir si notre modèle de Poisson s'ajuste bien ?
 # ╔═╡ a3b4c5d6-0017-4e2f-0b1c-6d7e8f9a0b1c
 let
 	pois_simple = glm(@formula(goals ~ shots), df_od, Poisson(), LogLink())
-	resids = residuals(pois_simple, type=:pearson)
+	resids = (df_od.goals .- predict(pois_simple, df_od)) ./ sqrt.(max.(predict(pois_simple, df_od), 0.1))
 	chi2 = sum(resids.^2)
 	df_resid = nrow(df_od) - length(coef(pois_simple))
 	r = chi2 / df_resid
@@ -277,7 +278,7 @@ let
 
 	DataFrame(
 		modèle      = ["Poisson", "Binomiale négative"],
-		AIC         = round.([aic(pois_r), aic(nb_r)]; digits=1),
+		AIC         = round.([StatsBase.aic(pois_r), StatsBase.aic(nb_r)]; digits=1),
 		variance_moyenne = [round(var(goals_r)/mean(goals_r); digits=2), ""],
 	)
 end
@@ -324,6 +325,7 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
@@ -332,6 +334,7 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 [compat]
 DataFrames = "1"
 Distributions = "0.25"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 GLM = "1"
 Plots = "1"
 """
