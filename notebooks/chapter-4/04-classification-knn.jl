@@ -264,6 +264,97 @@ let
 	)
 end
 
+
+# ╔═╡ b0c1d2e3-0019-1f9a-7c8d-3e4f5a6b7c8d
+md"""
+## Ajuster le seuil de décision
+
+Jusqu'ici on a utilisé un seuil de 0,5 : si la proportion de votes « But »
+parmi les K voisins dépasse 50 %, on prédit But.  Mais ce seuil est
+arbitraire.
+
+**Pourquoi l'ajuster ?** Avec des données déséquilibrées (peu de buts),
+le seuil de 0,5 est trop élevé — presque aucun tir n'atteint 50 % de
+votes « But » parmi ses voisins.  On peut **abaisser le seuil** pour
+détecter plus de buts, au prix de plus de fausses alertes.
+
+### Probabilités KNN
+
+En classification, `predict_proba` de sklearn retourne la proportion
+de votes pour chaque classe :
+
+```python
+proba_goal = knn.predict_proba(X_test)[:, 1]  # probabilité de la classe « But »
+```
+
+En Julia, on calcule ça manuellement : pour chaque tir de test, on
+compte combien de ses K voisins sont des buts, divisé par K.
+"""
+
+# ╔═╡ b0c1d2e3-0020-1f9a-7c8d-3e4f5a6b7c8d
+function knn_proba(X_train, y_train, X_query, k)
+    dists = [sqrt(sum((X_query[i,:] .- X_train[j,:]).^2))
+             for i in 1:size(X_query,1), j in 1:size(X_train,1)]
+    probs = Float64[]
+    for i in 1:size(X_query,1)
+        neighbors = sortperm(dists[i,:])[1:k]
+        push!(probs, sum(y_train[neighbors]) / k)  # proportion de buts
+    end
+    return probs
+end
+
+# ╔═╡ b0c1d2e3-0021-1f9a-7c8d-3e4f5a6b7c8d
+md"""
+### Comparer plusieurs seuils
+"""
+
+# ╔═╡ b0c1d2e3-0022-1f9a-7c8d-3e4f5a6b7c8d
+let
+    k = 5
+    probs = knn_proba(X_tr, y_tr, X_te, k)
+
+    thresholds = [0.1, 0.2, 0.3, 0.4, 0.5]
+    results = DataFrame(seuil=Float64[], précision=Float64[], rappel=Float64[], f1=Float64[])
+
+    for th in thresholds
+        preds = Int.(probs .>= th)
+        TP = sum((preds .== 1) .& (y_te .== 1))
+        FP = sum((preds .== 1) .& (y_te .== 0))
+        FN = sum((preds .== 0) .& (y_te .== 1))
+        prec = TP / max(TP + FP, 1)
+        rec  = TP / max(TP + FN, 1)
+        f1   = 2 * prec * rec / max(prec + rec, 0.001)
+        push!(results, [th, round(prec; digits=3), round(rec; digits=3), round(f1; digits=3)])
+    end
+
+    best_idx = argmax(results.f1)
+    best_th   = results.seuil[best_idx]
+
+    p1 = plot(results.seuil, results.rappel, marker=:circle, label="Rappel", color=:coral,
+        title="Précision et Rappel vs Seuil", xlabel="Seuil", ylabel="Score")
+    plot!(p1, results.seuil, results.précision, marker=:square, label="Précision", color=:steelblue)
+    vline!(p1, [best_th], color=:green, linestyle=:dash, linewidth=1.5,
+        label="Meilleur seuil = $best_th")
+
+    results
+end
+
+# ╔═╡ b0c1d2e3-0023-1f9a-7c8d-3e4f5a6b7c8d
+md"""
+**Ce qu'on observe :**
+- Seuil 0,5 → rappel nul (le problème qu'on a identifié)
+- Seuil 0,1–0,2 → le rappel augmente (on détecte des buts), mais la
+  précision baisse (plus de fausses alertes)
+- Le **meilleur seuil** dépend de l'objectif : maximiser le F1-score,
+  ou privilégier le rappel (ne rien rater) vs la précision (ne pas
+  se tromper)
+
+En pratique, sklearn choisit automatiquement le seuil qui maximise
+le F1-score ou utilise `predict_proba()` pour laisser l'utilisateur
+décider.
+"""
+
+
 # ╔═╡ b0c1d2e3-0015-1f9a-7c8d-3e4f5a6b7c8d
 md"""
 ## Visualiser la frontière de décision
@@ -1828,6 +1919,11 @@ version = "1.13.0+0"
 # ╠═b0c1d2e3-0012-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0013-1f9a-7c8d-3e4f5a6b7c8d
 # ╠═b0c1d2e3-0014-1f9a-7c8d-3e4f5a6b7c8d
+# ╟─b0c1d2e3-0019-1f9a-7c8d-3e4f5a6b7c8d
+# ╠═b0c1d2e3-0020-1f9a-7c8d-3e4f5a6b7c8d
+# ╟─b0c1d2e3-0021-1f9a-7c8d-3e4f5a6b7c8d
+# ╠═b0c1d2e3-0022-1f9a-7c8d-3e4f5a6b7c8d
+# ╟─b0c1d2e3-0023-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0015-1f9a-7c8d-3e4f5a6b7c8d
 # ╠═b0c1d2e3-0016-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0017-1f9a-7c8d-3e4f5a6b7c8d
