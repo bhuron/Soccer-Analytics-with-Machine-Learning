@@ -427,18 +427,19 @@ let
 	grid_preds = knn_classify(X_tr, y_tr, grid_flat, k)
 
 	# Scatter with decision regions
-	scatter(X_tr[y_tr .== 0, 1], X_tr[y_tr .== 0, 2],
+	bd = scatter(X_tr[y_tr .== 0, 1], X_tr[y_tr .== 0, 2],
 		color=:coral, alpha=0.5, markersize=5, label="Pas but (train)",
 		title="Frontière de décision KNN (K=$k)", xlabel="Distance std", ylabel="Angle std")
-	scatter!(X_tr[y_tr .== 1, 1], X_tr[y_tr .== 1, 2],
+	scatter!(bd, X_tr[y_tr .== 1, 1], X_tr[y_tr .== 1, 2],
 		color=:lime, alpha=0.8, markersize=8, label="But (train)")
 
 	# Overlay grid predictions as background
 	but_region = grid_flat[grid_preds .== 1, :]
 	if size(but_region, 1) > 0
-		scatter!(but_region[:, 1], but_region[:, 2],
+		scatter!(bd, but_region[:, 1], but_region[:, 2],
 			color=:green, alpha=0.03, markersize=1, label="Région But")
 	end
+	bd
 end
 
 # ╔═╡ b0c1d2e3-0017-1f9a-7c8d-3e4f5a6b7c8d
