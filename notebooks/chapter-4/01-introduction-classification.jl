@@ -123,7 +123,7 @@ let
 	n_goals = sum(shots.is_goal)
 	n_nongoals = n_shots - n_goals
 
-	outcome_counts = combine(groupby(shots, "shot.outcome.name"), nrow => :count)
+	global outcome_counts = combine(groupby(shots, "shot.outcome.name"), nrow => :count)
 	sort!(outcome_counts, :count, rev=true)
 
 	p1 = bar(["Pas but", "But"], [n_nongoals, n_goals],
@@ -132,6 +132,9 @@ let
 
 	p1
 end
+
+# ╔═╡ e7f8a9b0-0014-8c6d-4f5a-0b1c2d3e4f5a
+outcome_counts
 
 # ╔═╡ e7f8a9b0-0010-8c6d-4f5a-0b1c2d3e4f5a
 md"""
