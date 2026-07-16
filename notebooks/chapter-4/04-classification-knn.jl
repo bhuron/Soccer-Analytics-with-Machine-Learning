@@ -209,6 +209,13 @@ md"""
 ## Comparaison KNN vs Régression logistique
 
 Entraînons les deux modèles sur les mêmes données et comparons.
+
+**Note sur les données déséquilibrées :** avec seulement ~25 tirs
+dont 2–3 buts, les deux modèles auront tendance à prédire « Pas but »
+pour tout le monde.  C'est normal.  L'important est de comprendre
+**pourquoi** et de savoir quelles solutions existent : plus de données,
+plus de variables, rééquilibrage des classes, ou ajustement du seuil
+de décision.
 """
 
 # ╔═╡ b0c1d2e3-0014-1f9a-7c8d-3e4f5a6b7c8d
