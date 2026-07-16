@@ -355,6 +355,57 @@ décider.
 """
 
 
+# ╔═╡ b0c1d2e3-0024-1f9a-7c8d-3e4f5a6b7c8d
+md"""
+## Même chose pour la régression logistique
+
+La régression logistique produit naturellement des probabilités via la
+fonction sigmoïde — contrairement à KNN, pas besoin de calculer des
+proportions de votes.  On peut donc faire exactement le même balayage
+de seuils.
+"""
+
+# ╔═╡ b0c1d2e3-0025-1f9a-7c8d-3e4f5a6b7c8d
+let
+    # Re-train logistic regression on the same standardized data
+    df_tr = DataFrame(X_tr, [:distance, :angle])
+    df_tr.goal = y_tr
+    df_te = DataFrame(X_te, [:distance, :angle])
+    logit = glm(@formula(goal ~ distance + angle), df_tr, Binomial(), LogitLink())
+    logit_probs = predict(logit, df_te)
+
+    thresholds = [0.1, 0.2, 0.3, 0.4, 0.5]
+    results_lr = DataFrame(seuil=Float64[], précision=Float64[], rappel=Float64[], f1=Float64[])
+
+    for th in thresholds
+        preds = Int.(logit_probs .>= th)
+        TP = sum((preds .== 1) .& (y_te .== 1))
+        FP = sum((preds .== 1) .& (y_te .== 0))
+        FN = sum((preds .== 0) .& (y_te .== 1))
+        prec = TP / max(TP + FP, 1)
+        rec  = TP / max(TP + FN, 1)
+        f1   = 2 * prec * rec / max(prec + rec, 0.001)
+        push!(results_lr, [th, round(prec; digits=3), round(rec; digits=3), round(f1; digits=3)])
+    end
+
+    best_lr = results_lr.seuil[argmax(results_lr.f1)]
+
+    p1 = plot(results_lr.seuil, results_lr.rappel, marker=:circle, label="Rappel", color=:coral,
+        title="Régression logistique — Précision/Rappel vs Seuil", xlabel="Seuil", ylabel="Score")
+    plot!(p1, results_lr.seuil, results_lr.précision, marker=:square, label="Précision", color=:steelblue)
+    vline!(p1, [best_lr], color=:green, linestyle=:dash, linewidth=1.5,
+        label="Meilleur seuil = $best_lr")
+
+    results_lr
+end
+
+# ╔═╡ b0c1d2e3-0026-1f9a-7c8d-3e4f5a6b7c8d
+md"""
+Comparé à KNN, la régression logistique produit des probabilités plus
+**lisses** — elles varient continûment avec la distance et l'angle —
+tandis que les probabilités KNN sont discrètes (multiples de 1/K).
+"""
+
 # ╔═╡ b0c1d2e3-0015-1f9a-7c8d-3e4f5a6b7c8d
 md"""
 ## Visualiser la frontière de décision
@@ -1924,6 +1975,9 @@ version = "1.13.0+0"
 # ╟─b0c1d2e3-0021-1f9a-7c8d-3e4f5a6b7c8d
 # ╠═b0c1d2e3-0022-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0023-1f9a-7c8d-3e4f5a6b7c8d
+# ╟─b0c1d2e3-0024-1f9a-7c8d-3e4f5a6b7c8d
+# ╠═b0c1d2e3-0025-1f9a-7c8d-3e4f5a6b7c8d
+# ╟─b0c1d2e3-0026-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0015-1f9a-7c8d-3e4f5a6b7c8d
 # ╠═b0c1d2e3-0016-1f9a-7c8d-3e4f5a6b7c8d
 # ╟─b0c1d2e3-0017-1f9a-7c8d-3e4f5a6b7c8d
