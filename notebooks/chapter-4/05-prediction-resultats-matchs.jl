@@ -288,11 +288,8 @@ let
 		push!(report_lines, "| $cls | $(round(prec; digits=2)) | $(round(rec; digits=2)) | $(round(f1; digits=2)) | $support |")
 	end
 
-	md"""
-	| Classe | Précision | Rappel | F1 | Support |
-	|---|---|---|---|---|
-	$(join(report_lines, "\n"))
-	"""
+	report_md = "Accuracy: $(round(acc * 100; digits=1))%\n\n| Classe | Precision | Rappel | F1 | Support |\n|---|---|---|---|---|\n" * join(report_lines, "\n")
+	Markdown.parse(report_md)
 end
 
 # ╔═╡ c1d2e3f4-0016-2a0b-8d9e-4f5a6b7c8d9e
