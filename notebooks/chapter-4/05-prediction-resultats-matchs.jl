@@ -271,9 +271,8 @@ let
 	classes = ["Home Win", "Draw", "Away Win"]
 	acc = sum(ovr_preds .== y_test) / length(y_test)
 
-	report_lines = String[]
-	push!(report_lines, "**Accuracy globale : $(round(acc * 100; digits=1)) %**")
-	push!(report_lines, "")
+	report_lines = []
+	# Accuracy line shown separately
 
 	for cls in classes
 		y_bin = Int.(y_test .== cls)
