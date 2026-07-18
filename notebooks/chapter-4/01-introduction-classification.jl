@@ -133,7 +133,7 @@ let
 	p1
 end
 
-# ╔═╡ e7f8a9b0-0014-8c6d-4f5a-0b1c2d3e4f5a
+# ╔═╡ 97f09f46-513a-4017-a9d3-5d88d9971541
 outcome_counts
 
 # ╔═╡ e7f8a9b0-0010-8c6d-4f5a-0b1c2d3e4f5a
@@ -1455,6 +1455,7 @@ version = "1.13.0+0"
 # ╠═e7f8a9b0-0007-8c6d-4f5a-0b1c2d3e4f5a
 # ╟─e7f8a9b0-0008-8c6d-4f5a-0b1c2d3e4f5a
 # ╠═e7f8a9b0-0009-8c6d-4f5a-0b1c2d3e4f5a
+# ╠═97f09f46-513a-4017-a9d3-5d88d9971541
 # ╟─e7f8a9b0-0010-8c6d-4f5a-0b1c2d3e4f5a
 # ╟─e7f8a9b0-0011-8c6d-4f5a-0b1c2d3e4f5a
 # ╟─e7f8a9b0-0012-8c6d-4f5a-0b1c2d3e4f5a
